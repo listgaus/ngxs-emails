@@ -2,13 +2,24 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { CategoriesSelectorComponent } from './components/categories-selector/categories-selector.component';
+import { EmailsListComponent } from './components/emails-list/emails-list.component';
+import { SelectedEmailComponent } from './components/selected-email/selected-email.component';
+import { HeaderComponent } from './components/header/header.component';
+import {NgxsModule} from "@ngxs/store";
+import {AppState} from "./store/app.state";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CategoriesSelectorComponent,
+    EmailsListComponent,
+    SelectedEmailComponent,
+    HeaderComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    NgxsModule.forRoot([AppState])
   ],
   providers: [],
   bootstrap: [AppComponent]

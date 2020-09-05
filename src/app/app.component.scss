@@ -1,0 +1,24 @@
+.header {
+    height: 50px;
+    width: 100%;
+    border-bottom: 2px solid gray;
+  }
+  .content {
+    display: flex;
+    .categories-panel {
+      width: 20%;
+      height: 95vh;
+      border-right: 2px solid gray;
+      overflow: scroll;
+      overflow-x: hidden;
+      direction: rtl;
+      text-align: left;
+      padding: 10px 0 0 30px;
+      line-height: 1.2;
+    }
+    .mail-content {
+      width: 80%;
+    }
+  }
+
+
