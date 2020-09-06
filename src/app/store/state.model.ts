@@ -9,4 +9,5 @@ export class AppStateModel {
   public currentUser: User;
   public emails: Email[];
   public selectedEmail: {};
+  public isLoading: boolean;
 }

@@ -2,6 +2,7 @@ import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {Injectable} from '@angular/core';
 import {AppStateModel} from "./state.model";
 import {GetCategories, GetUsers, SelectEmail, SelectUser, UpdateSelectedCategory} from "./app.actions";
+// @ts-ignore
 import * as db from "./../../assets/db/data.json";
 
 @State<AppStateModel>({
@@ -14,13 +15,19 @@ import * as db from "./../../assets/db/data.json";
     selectedCategory: '',
     currentUser: undefined,
     emails: [],
-    selectedEmail: undefined
+    selectedEmail: undefined,
+    isLoading: true
   }
 })
 @Injectable()
 
 export class AppState {
   constructor() {
+  }
+
+  @Selector([AppState])
+  static isLoading(state: AppStateModel): boolean {
+    return state.isLoading;
   }
 
   @Selector([AppState])
@@ -86,6 +93,7 @@ export class AppState {
   }
   @Action(GetCategories)
   async getCategories(ctx: StateContext<AppStateModel>) {
+    ctx.patchState({isLoading: true});
     let dbCategories = db.categories;
     let categories = [];
     let subCategories = [];
@@ -97,7 +105,7 @@ export class AppState {
 
     let uniqeSet = new Set(subCategories.map((o) => o.parentId));
     let parentIds = [...uniqeSet];
-    ctx.patchState({categories: categories, subCategories: subCategories, parentIds: parentIds});
+    ctx.patchState({categories: categories, subCategories: subCategories, parentIds: parentIds, isLoading: false});
   }
 
 }

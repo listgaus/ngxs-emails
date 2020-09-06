@@ -1,5 +1,8 @@
+<ng-container *ngIf="isLoading$ | async" >
+  Loading is true
+</ng-container>
 <div class="header">
- <header></header>
+  <header></header>
 </div>
 <div class="content">
   <div class="categories-panel">
@@ -9,3 +12,4 @@
     <emails-list></emails-list>
   </div>
 </div>
+

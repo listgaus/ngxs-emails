@@ -13,10 +13,8 @@ import {SelectEmail} from "../../store/app.actions";
 export class EmailsListComponent   {
   @Select(AppState.emails) emails$: Observable<Email[]>;
   @Select(AppState.selectedEmail) selectedEmail$: Observable<Email>;
-  selectedEmail: Email = undefined;
 
-  constructor(private store: Store) {
-  }
+  constructor(private store: Store) {}
 
   selectEmail(email: Email) {
     this.store.dispatch(new SelectEmail(email))
