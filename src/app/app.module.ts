@@ -8,6 +8,7 @@ import { SelectedEmailComponent } from './components/selected-email/selected-ema
 import { HeaderComponent } from './components/header/header.component';
 import {NgxsModule} from "@ngxs/store";
 import {AppState} from "./store/app.state";
+import { RecursiveSubCategoryComponent } from './components/recursive-sub-category/recursive-sub-category.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {AppState} from "./store/app.state";
     CategoriesSelectorComponent,
     EmailsListComponent,
     SelectedEmailComponent,
-    HeaderComponent
+    HeaderComponent,
+    RecursiveSubCategoryComponent
   ],
   imports: [
     BrowserModule,

@@ -1,17 +1,4 @@
 <div class="parent-category" *ngFor="let category of categories$ | async">
   <h2 (click)="selectCategory(category.id)" [class.is-selected]="category.id === (selectedCategory$ | async)">{{category.name}}</h2>
-  <div *ngIf="isHeader(category.id)">
-    <div class="child-category" *ngFor="let subCategory of subCategories$ | async">
-      <div *ngIf="subCategory.parentId === category.id">
-        <h3 class="child-title" (click)="selectCategory(subCategory.id)" [class.is-selected]="subCategory.id === (selectedCategory$ | async)">{{subCategory.name}} </h3>
-        <div class="child-category" *ngIf="isHeader(subCategory.id)">
-          <div *ngFor="let grandSubCategory of subCategories$ | async">
-            <div *ngIf="grandSubCategory.parentId === subCategory.id">
-              <h4 (click)="selectCategory(grandSubCategory.id)" [class.is-selected]="grandSubCategory.id === (selectedCategory$ | async)"> {{grandSubCategory.name}}</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <recursive-sub-category *ngIf="isHeader(category.id)" [categories]="subCategories$ | async" [currentCategory]="category" [parentIds]="parentIds$ | async"></recursive-sub-category>
 </div>
