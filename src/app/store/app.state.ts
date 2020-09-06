@@ -1,7 +1,7 @@
 import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {Injectable} from '@angular/core';
 import {AppStateModel} from "./state.model";
-import {GetUsers, SelectUser, UpdateSelectedCategory} from "./app.actions";
+import {GetCategories, GetUsers, SelectEmail, SelectUser, UpdateSelectedCategory} from "./app.actions";
 import * as db from "./../../assets/db/data.json";
 
 @State<AppStateModel>({
@@ -11,7 +11,7 @@ import * as db from "./../../assets/db/data.json";
     subCategories: [],
     users: [],
     parentIds: [],
-    selectedCategory: {},
+    selectedCategory: '',
     currentUser: undefined,
     emails: [],
     selectedEmail: undefined
@@ -22,34 +22,42 @@ import * as db from "./../../assets/db/data.json";
 export class AppState {
   constructor() {
   }
+
   @Selector([AppState])
   static categories(state: AppStateModel): any[] {
     return state.categories;
   }
+
   @Selector([AppState])
   static subCategories(state: AppStateModel): any[] {
     return state.subCategories;
   }
+
   @Selector([AppState])
   static parentIds(state: AppStateModel): any[] {
     return state.parentIds;
   }
+
   @Selector([AppState])
   static users(state: AppStateModel): any[] {
     return state.users;
   }
+
   @Selector([AppState])
   static selectedCategory(state: AppStateModel): {} {
     return state.selectedCategory;
   }
+
   @Selector([AppState])
   static currentUser(state: AppStateModel): {} {
     return state.currentUser;
   }
+
   @Selector([AppState])
   static selectedEmail(state: AppStateModel): {} {
     return state.selectedEmail;
   }
+
   @Selector([AppState])
   static emails(state: AppStateModel): {} {
     return state.emails;
@@ -57,39 +65,39 @@ export class AppState {
 
   @Action(SelectUser)
   async selectUser(ctx: StateContext<AppStateModel>, action: SelectUser) {
-    console.log('setting user', action.paylaod)
     ctx.patchState({currentUser: action.paylaod});
   }
+
   @Action(UpdateSelectedCategory)
   async updateSelectCategory(ctx: StateContext<AppStateModel>, action: UpdateSelectedCategory) {
-    ctx.patchState({selectedCategory: action.paylaod});
+    let emails = db.emails;
+    let filter = emails.filter(mail => mail.categoryId === action.paylaod);
+    ctx.patchState({selectedCategory: action.paylaod, emails: filter, selectedEmail: undefined});
   }
+
   @Action(GetUsers)
-  async getUsers(ctx: StateContext<AppStateModel>){
-    console.log('getting users')
+  async getUsers(ctx: StateContext<AppStateModel>) {
     ctx.patchState({users: db.users});
   }
 
+  @Action(SelectEmail)
+  async selectEmail(ctx: StateContext<AppStateModel>, action: SelectEmail){
+    ctx.patchState({selectedEmail: action.paylaod})
+  }
+  @Action(GetCategories)
+  async getCategories(ctx: StateContext<AppStateModel>) {
+    let dbCategories = db.categories;
+    let categories = [];
+    let subCategories = [];
+    dbCategories.map(c => {
+      if (c.parentId === null) {
+        categories.push(c)
+      } else (subCategories.push(c))
+    })
 
-  // @Action(LoginSuccess)
-  // async setNotificationSettings(ctx: StateContext<SharedStateModel>, action: LoginSuccess) {
-  //   await this.notificationService.connectToNotifications((settings: PushNotificationSettings) => {
-  //     ctx.patchState({notificationSettings: settings})
-  //   }, () => ctx.getState().notificationSettings);
-  //   this.notificationService
-  //     .channel<AccessPointStatusSignalR>("status")
-  //     .pipe(filter(payload => !!payload))
-  //     .subscribe(payload => {
-  //       ctx.dispatch(new UpdateAccessPoints(payload));
-  //       ctx.getState().statusChannelSubscription$.next(payload);
-  //     });
-  //
-  //   this.notificationService
-  //     .channel<NetworkStatusSignalR>("entitiesChanged")
-  //     .pipe(filter(payload => !!payload))
-  //     .subscribe(payload => {
-  //       ctx.dispatch(new UpdateNetworks(payload));
-  //     });
-  // }
+    let uniqeSet = new Set(subCategories.map((o) => o.parentId));
+    let parentIds = [...uniqeSet];
+    ctx.patchState({categories: categories, subCategories: subCategories, parentIds: parentIds});
+  }
 
 }

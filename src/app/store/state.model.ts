@@ -1,12 +1,12 @@
-import {User} from "../../assets/models/data-model";
+import {Category, Email, User} from "../../assets/models/data-model";
 
 export class AppStateModel {
-  public categories: any[];
-  public subCategories: any[];
-  public users: any[];
+  public categories: Category[];
+  public subCategories: Category[];
+  public users: User[];
   public parentIds: any[];
-  public selectedCategory: {};
+  public selectedCategory: string;
   public currentUser: User;
-  public emails: any[];
+  public emails: Email[];
   public selectedEmail: {};
 }
