@@ -1,0 +1,30 @@
+<div class="emails-container">
+  <button class="emails-back-btn" *ngIf="(selectedEmail$ | async) !== undefined" (click)="selectEmail(undefined)">< Back</button>
+  <div *ngIf="(selectedEmail$ | async) !== undefined">
+    <selected-email [selectedEmail]="(selectedEmail$ | async)"></selected-email>
+  </div>
+  <div class="emails-table" *ngIf="(selectedEmail$ | async) === undefined && (emails$ | async).length === 0">
+    <table class="emails">
+      <tr class="header">
+        <th class="email-th-from">From</th>
+        <th class="email-th-title">Title</th>
+      </tr>
+      <tr>
+        <div>No emails yet</div>
+      </tr>
+    </table>
+    <div></div>
+  </div>
+  <div class="emails-table" *ngIf="(selectedEmail$ | async) === undefined && (emails$ | async).length != 0">
+    <table class="emails">
+      <tr class="header">
+        <th class="email-th-from">From</th>
+        <th class="email-th-title">Title</th>
+      </tr>
+      <tr *ngFor="let email of emails$ | async" (click)="selectEmail(email)">
+        <td>{{email.from}}</td>
+        <td>{{email.title}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

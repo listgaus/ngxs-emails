@@ -1,0 +1,38 @@
+.emails-container {
+  width: 100%;
+  padding: 2vh;
+  .emails-back-btn{
+    border-radius: 50%;
+    width: 5vw;
+    &:hover{
+      background: #200390a8;
+    }
+  }
+  .header {
+    .email-th-from {
+      width: 40%;
+    }
+    .email-th-title {
+      width: 60%;
+    }
+  }
+}
+table{
+  width: 98%
+}
+td, th {
+  border: 1px solid blue;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:hover {background-color: #ddd;}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #200390a8;
+  color: white;
+}
