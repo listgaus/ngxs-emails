@@ -1,4 +1,4 @@
-<div *ngIf="isParent(currentCategory.id)">
+<div>
   <div class="child-category" *ngFor="let subCategory of categories">
     <div *ngIf="subCategory.parentId === currentCategory.id">
       <h3 class="child-title" (click)="selectCategory(subCategory.id)" [class.is-selected]="subCategory.id === (selectedCategory$ | async)">{{subCategory.name}}</h3>

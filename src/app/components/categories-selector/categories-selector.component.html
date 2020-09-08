@@ -1,4 +1,5 @@
 <div class="parent-category" *ngFor="let category of categories$ | async">
   <h2 (click)="selectCategory(category.id)" [class.is-selected]="category.id === (selectedCategory$ | async)">{{category.name}}</h2>
-  <recursive-sub-category *ngIf="isHeader(category.id)" [categories]="subCategories$ | async" [currentCategory]="category" [parentIds]="parentIds$ | async"></recursive-sub-category>
+  <recursive-sub-category *ngIf="isHeader(category.id)" [categories]="subCategories$ | async"
+                          [currentCategory]="category" [parentIds]="parentIds$ | async"></recursive-sub-category>
 </div>
